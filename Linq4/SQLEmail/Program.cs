@@ -35,15 +35,39 @@ namespace SQLEmail
                 }
 
                 var emails = list.Where(Obj => Obj.Salario > limite).OrderBy(Obj => Obj.EmailNome).Select(Obj => Obj.EmailNome);
+                               
 
                 var sum = list.Where(obj => obj.Nome[0] == 'M').Sum(Obj => Obj.Salario);
 
+                var emails2 =
+                        from Obj in list
+                        where Obj.Salario > limite
+                        orderby Obj.Nome
+                        select Obj;
 
+                var Nomes = list.Where(Obj => Obj.Salario > limite).OrderBy(Obj => Obj.Nome);
 
                 foreach (String email in emails)
                 {
                     Console.WriteLine(email);
                 }
+
+                Console.WriteLine();
+
+                foreach (var  Email in emails2)
+                {
+                    Console.WriteLine("Nome : "+Email.Nome+" ,  "+Email.EmailNome + " , " + Email.Salario.ToString("F2",CultureInfo.InvariantCulture));
+
+                }
+
+                Console.WriteLine();
+
+                foreach (Email n  in Nomes)
+                {
+                    Console.WriteLine(n.Nome+ " ,  " + n.EmailNome+ " ,  " + n.Salario);
+
+                }
+                Console.WriteLine();
                 Console.WriteLine("Sum of salary of people whose name starts with 'M': " + sum.ToString("F2", CultureInfo.InvariantCulture));
 
             } catch (IOException e)
